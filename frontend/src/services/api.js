@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { BACKEND_URL } from './config'
 
 const TOKEN_KEY = 'at_token'
 
-const api = axios.create({ baseURL: '/api' })
+const api = axios.create({ baseURL: `${BACKEND_URL}/api` })
 
 // attach JWT token to every request
 api.interceptors.request.use((config) => {

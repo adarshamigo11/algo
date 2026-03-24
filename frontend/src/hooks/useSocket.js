@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client'
 import { useAuth } from '../context/AuthContext'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
+
 export const useSocket = () => {
   const { token } = useAuth()
   const socketRef  = useRef(null)
@@ -13,7 +15,10 @@ export const useSocket = () => {
   useEffect(() => {
     if (!token) return
 
-    const socket = io('/', { auth: { token }, transports: ['websocket', 'polling'] })
+    const socket = io(BACKEND_URL, {
+      auth: { token },
+      transports: ['websocket', 'polling'],
+    })
     socketRef.current = socket
 
     socket.on('connect',    () => setConnected(true))
